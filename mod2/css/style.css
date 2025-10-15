@@ -1,0 +1,135 @@
+/* css/style.css */
+
+/* --- Basic reset & box model --- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box; /* required by spec */
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif; /* optional but recommended */
+  font-size: 16px; /* base font size for relative sizing */
+  background: #f7f7f7;
+  color: #111;
+}
+
+/* --- Page layout --- */
+.page {
+  max-width: 1200px;
+  margin: 24px auto; /* center the page with some horizontal space */
+  padding: 0 16px;   /* horizontal space from viewport edges */
+}
+
+/* Heading: 75% larger than base (base = 16px -> 28px) */
+.site-header h1 {
+  margin: 0 0 20px 0;
+  font-size: 175%; /* +75% */
+  text-align: center;
+}
+
+/* Container for the three sections */
+.sections {
+  overflow: hidden; /* clearfix for floated children */
+}
+
+/* --- Common section styles --- */
+.section {
+  position: relative; /* required for absolute-positioned section-title */
+  border: 1px solid #000; /* 1px black border */
+  padding: 40px 16px 16px 16px; /* top padding leaves space so content doesn't overlap the title */
+  margin-bottom: 20px; /* vertical spacing between stacked sections (affects tablet/mobile) */
+  background: #fff;
+  min-height: 160px; /* visually similar to mockup */
+}
+
+/* Section title box (top-right, absolute) */
+/* title font-size = 125% (+25%) relative to base */
+.section-title {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 6px 10px;
+  border: 1px solid #000;
+  font-size: 125%;
+  font-weight: 600;
+  line-height: 1;
+}
+
+/* Colors for sections (choose readable contrast) */
+.section--chicken { background-color: #fff8e1; }
+.section--chicken .section-title { background-color: #ffcc80; }
+
+.section--beef { background-color: #fff0f0; }
+.section--beef .section-title { background-color: #ff8a80; }
+
+.section--sushi { background-color: #e8f5e9; }
+.section--sushi .section-title { background-color: #a5d6a7; }
+
+/* Padding inside the content area */
+.section-body p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* --- DESKTOP: 992px and above --- */
+/* 3 equal columns using floats with gutters */
+/* We will use a horizontal gutter of 20px between columns and 0 on the rightmost column. */
+@media (min-width: 992px) {
+  .section {
+    float: left;
+    width: calc((100% - 40px) / 3); /* total horizontal gutters = 20px * 2 = 40px */
+    margin-right: 20px; /* gutter between columns */
+    margin-bottom: 0; /* no vertical gaps needed when in one row */
+  }
+
+  /* remove right margin for every 3rd item to avoid overflow */
+  .section:nth-child(3n) {
+    margin-right: 0;
+  }
+
+  /* reduce top padding a bit on wide screens if desired */
+  .section { min-height: 220px; }
+}
+
+/* --- TABLET: 768px to 991px inclusive --- */
+/* first two in first row, equal size; third full width on second row */
+@media (min-width: 768px) and (max-width: 991px) {
+  .section {
+    float: left;
+    margin-right: 20px;
+    width: calc((100% - 20px) / 2); /* one gutter between the two halves */
+  }
+
+  /* Make the third section take the full width (clear floats) */
+  .section:nth-child(3) {
+    width: 100%;
+    margin-right: 0;
+    clear: both;
+    margin-top: 20px; /* vertical spacing between first row and the third section */
+  }
+}
+
+/* --- MOBILE: 767px and below --- */
+/* each section full width stacked */
+@media (max-width: 767px) {
+  .section {
+    width: 100%;
+    float: none;
+    margin-right: 0;
+  }
+
+  .section + .section {
+    margin-top: 12px;
+  }
+
+  /* slightly smaller min-height on small screens */
+  .section { min-height: 160px; }
+}
+
+/* accessibility: ensure title text color is readable */
+/* If your chosen colors lack contrast adjust colors here */
+.section-title,
+.section { color: #111; }
